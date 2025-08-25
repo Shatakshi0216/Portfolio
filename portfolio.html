@@ -19,6 +19,7 @@
         }
         .text-gradient {
             background: linear-gradient(90deg, #7c3aed, #db2777);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -27,6 +28,125 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .contact-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .contact-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Floating Orbs Animation */
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+            animation: floatOrb 20s ease-in-out infinite;
+            filter: blur(1px);
+        }
+        
+        .orb-1 {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+        
+        .orb-3 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+        
+        .orb-4 {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            right: 40%;
+            animation-delay: -15s;
+        }
+        
+        @keyframes floatOrb {
+            0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+            25% { transform: translateY(-30px) translateX(20px) rotate(90deg); }
+            50% { transform: translateY(-60px) translateX(-20px) rotate(180deg); }
+            75% { transform: translateY(-30px) translateX(-40px) rotate(270deg); }
+        }
+        
+        /* Hexagon Grid */
+        .hex-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            perspective: 1000px;
+        }
+        
+        .hex-card {
+            width: 140px;
+            height: 140px;
+            position: relative;
+            margin: 20px;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .hex-card:hover {
+            transform: rotateY(180deg) scale(1.1);
+        }
+        
+        .hex-front, .hex-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 20px;
+        }
+        
+        .hex-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            backdrop-filter: blur(10px);
+        }
+        
+        .hex-front {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .skill-sphere {
             position: relative;
@@ -134,24 +254,7 @@
             transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
-        /* Typing animation */
-        .typing-text {
-            overflow: hidden;
-            border-right: 3px solid #8b5cf6;
-            white-space: nowrap;
-            animation: typing 6s steps(60, end), blink-caret 0.75s step-end infinite;
-            max-width: 100%;
-        }
-        
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-        
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: #8b5cf6; }
-        }
+        /* Removed typing animation and cursor */
         
         /* Responsive typing text */
         @media (max-width: 768px) {
@@ -162,59 +265,6 @@
             }
         }
         
-        /* Dark Mode Variables */
-        :root {
-            --bg-primary: #F5F3FF;
-            --bg-secondary: #ffffff;
-            --text-primary: #1e1b4b;
-            --text-secondary: #6b7280;
-            --border-color: #e5e7eb;
-        }
-        
-        [data-theme="dark"] {
-            --bg-primary: #0f0f23;
-            --bg-secondary: #1a1a2e;
-            --text-primary: #eee6ff;
-            --text-secondary: #a1a1aa;
-            --border-color: #374151;
-        }
-        
-        /* Theme Toggle Button */
-        .theme-toggle {
-            position: fixed;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            z-index: 1000;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #8b5cf6, #ec4899);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-        }
-        
-        .theme-toggle:hover {
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.4);
-        }
-        
-        /* Dark mode styles */
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        .glass-card {
-            background: var(--bg-secondary);
-            transition: background-color 0.3s ease;
-        }
         
         /* Skills Filter */
         .skills-filter {
@@ -310,8 +360,9 @@
             background-size: 400% 400%;
             animation: gradientShift 4s ease infinite;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
         }
         
         @keyframes gradientShift {
@@ -357,6 +408,7 @@
             border-radius: 50%;
             border: 6px solid white;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            filter: brightness(0.85) contrast(1.1);
         }
 
         .about-focus-item {
@@ -380,38 +432,30 @@
     
             
 
-    <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-sm shadow-sm">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold font-serif text-gradient">ST</h1>
             <nav class="hidden md:flex space-x-8 font-medium">
                 <a href="#about" class="text-gray-600 hover:text-violet-500 transition">About</a>
                 <a href="#projects" class="text-gray-600 hover:text-violet-500 transition">Projects</a>
-                <a href="#testimonials" class="text-gray-600 hover:text-violet-500 transition">Testimonials</a>
+                <a href="#certifications" class="text-gray-600 hover:text-violet-500 transition">Certifications</a>
                 <a href="#journey" class="text-gray-600 hover:text-violet-500 transition">Journey</a>
                 <a href="#contact" class="text-gray-600 hover:text-violet-500 transition">Contact</a>
             </nav>
-            <a href="resume6.pdf" download="Shatakshi_Tiwari_Resume.pdf" class="bg-violet-600 text-white px-5 py-2 rounded-full hover:bg-violet-700 transition shadow-lg shadow-violet-500/30 font-semibold flex items-center space-x-2">
+            <a href="./Shatakshi Tiwari - Resume.pdf" download="Shatakshi_Tiwari_Resume.pdf" class="bg-violet-600 text-white px-5 py-2 rounded-full hover:bg-violet-700 transition shadow-lg shadow-violet-500/30 font-semibold flex items-center space-x-2">
                 <span>Resume</span>
                 <i data-feather="download" class="w-4 h-4"></i>
             </a>
         </div>
     </header>
 
-    <!-- Progress Bar -->
     <div class="progress-bar" id="progress-bar"></div>
     
-    <!-- Animated Background -->
     <div class="animated-bg"></div>
     
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <i data-feather="sun" class="w-6 h-6 text-white" id="theme-icon"></i>
-    </button>
     
     <main class="container mx-auto px-6 pt-24 overflow-x-hidden">
 
-        <!-- Hero Section -->
         <section id="home" class="min-h-screen flex items-center justify-center text-center relative">
             <div class="absolute inset-0 -z-10 overflow-hidden">
                 <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
@@ -420,11 +464,9 @@
             </div>
             <div data-aos="fade-up">
                 <h1 class="text-5xl md:text-8xl font-serif font-bold mb-4">
-                    Crafting <span class="animated-gradient">Digital Experiences</span>
+                    <span class="animated-gradient">Crafting Digital Experiences</span>
                 </h1>
-                <div class="typing-text text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto" id="typing-text">
-                    Hi, I'm Shatakshi Tiwari. A creative developer and AI enthusiast transforming ideas into intelligent and beautiful applications.
-                </div>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">Hi, I'm Shatakshi Tiwari. A creative developer and AI enthusiast transforming ideas into intelligent and beautiful applications.</p>
                 <div class="flex justify-center space-x-6">
                     <a href="https://linkedin.com/in/shatakshitiwari017" target="_blank" class="magnetic glow-on-hover text-gray-600 hover:text-violet-500 transition bounce-animation"><i data-feather="linkedin" class="w-8 h-8"></i></a>
                     <a href="https://github.com/Shatakshi0216" target="_blank" class="magnetic glow-on-hover text-gray-600 hover:text-violet-500 transition bounce-animation"><i data-feather="github" class="w-8 h-8"></i></a>
@@ -433,18 +475,14 @@
             </div>
         </section>
 
-<!-- About Me -->
 <section id="about" class="py-20 lg:py-40 bg-gray-50 overflow-hidden">
     <div class="container mx-auto px-6 relative">
 
-        <div class="absolute -top-10 -left-10 text-[20rem] font-serif font-bold text-gray-200/60 opacity-50 z-0" aria-hidden="true">
-            S
-        </div>
 
         <div class="relative z-10 lg:grid lg:grid-cols-12 lg:gap-12 items-center">
 
             <div class="lg:col-span-4 text-center lg:text-left mb-12 lg:mb-0" data-aos="fade-right">
-                <img src="Images/profile.jpg" alt="Shatakshi Tiwari" class="profile-image mx-auto lg:mx-0 glow-on-hover pulse-animation">
+                <img src="Images/profile.jpg" alt="Shatakshi Tiwari" class="profile-image mx-auto lg:mx-0">
             </div>
 
             <div class="lg:col-span-8">
@@ -453,9 +491,9 @@
                 </h2>
                 
                 <div class="mt-8" data-aos="fade-left" data-aos-delay="200">
-                    <h3 class="text-2xl md:text-3xl font-semibold text-gray-800">I am a Creative Developer & AI Enthusiast based in Indore.</h3>
+                    <h3 class="text-2xl md:text-3xl font-semibold text-gray-800">I am a Creative Developer & AI Enthusiast.</h3>
                     <p class="mt-6 text-lg text-gray-600 leading-relaxed max-w-2xl">
-                        As a final-year M.Tech student, my world revolves around the intersection of human-centric design and machine intelligence. I'm passionate about building clean, efficient code and crafting applications that are not only powerful but also a pleasure to use.
+                        As a 3rd year M.Tech IT student, my world revolves around the intersection of human-centric design and machine intelligence. I'm passionate about building clean, efficient code and crafting applications that are not only powerful but also a pleasure to use.
                     </p>
                 </div>
 
@@ -488,14 +526,12 @@
     </div>
 </section>
 
-        <!-- Skills -->
         <section id="skills" class="py-20">
             <div class="text-center mb-12" data-aos="fade-up">
                 <h2 class="text-4xl font-serif font-bold text-gray-800">My Digital Toolkit</h2>
                 <p class="text-lg text-gray-600 mt-2">An orbiting galaxy of technologies I use.</p>
             </div>
             
-            <!-- Skills Filter -->
             <div class="skills-filter" data-aos="fade-up" data-aos-delay="200">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="frontend">Frontend</button>
@@ -505,11 +541,9 @@
             </div>
             
             <div class="skill-sphere" id="skill-sphere-container" data-aos="zoom-in">
-                <!-- Skill icons will be populated by JS -->
-            </div>
+                </div>
         </section>
 
-        <!-- Certifications -->
         <section id="certifications" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16" data-aos="fade-up">
@@ -518,190 +552,119 @@
                 </div>
                 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Certification Card 1 -->
                     <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" data-aos="fade-up" data-aos-delay="100">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-violet-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i data-feather="award" class="w-8 h-8 text-violet-600"></i>
+                                <i data-feather="zap" class="w-8 h-8 text-violet-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Certification Name</h3>
-                            <p class="text-gray-600 mb-3">Issuing Organization</p>
-                            <p class="text-sm text-gray-500">Date Earned</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Prompt Engineering</h3>
+                            <p class="text-gray-600 mb-3">CSRBOX (IBM SkillsBuild)</p>
+                            <p class="text-sm text-gray-500">Dec 2024</p>
                         </div>
                     </div>
 
-                    <!-- Certification Card 2 -->
                     <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" data-aos="fade-up" data-aos-delay="200">
                         <div class="text-center">
-                            <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i data-feather="star" class="w-8 h-8 text-pink-600"></i>
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i data-feather="cloud" class="w-8 h-8 text-blue-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Certification Name</h3>
-                            <p class="text-gray-600 mb-3">Issuing Organization</p>
-                            <p class="text-sm text-gray-500">Date Earned</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Google Cloud Computing Foundation</h3>
+                            <p class="text-gray-600 mb-3">Google Cloud & GDSC IIPS</p>
+                            <p class="text-sm text-gray-500">Jan 2024</p>
                         </div>
                     </div>
 
-                    <!-- Certification Card 3 -->
                     <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" data-aos="fade-up" data-aos-delay="300">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i data-feather="shield" class="w-8 h-8 text-cyan-600"></i>
+                                <i data-feather="cpu" class="w-8 h-8 text-cyan-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Certification Name</h3>
-                            <p class="text-gray-600 mb-3">Issuing Organization</p>
-                            <p class="text-sm text-gray-500">Date Earned</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">AI Fundamentals</h3>
+                            <p class="text-gray-600 mb-3">IBM</p>
+                            <p class="text-sm text-gray-500">Dec 2024</p>
                         </div>
                     </div>
 
-                    <!-- Certification Card 4 -->
                     <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" data-aos="fade-up" data-aos-delay="400">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i data-feather="check-circle" class="w-8 h-8 text-green-600"></i>
+                                <i data-feather="layers" class="w-8 h-8 text-green-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Certification Name</h3>
-                            <p class="text-gray-600 mb-3">Issuing Organization</p>
-                            <p class="text-sm text-gray-500">Date Earned</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Generative AI in Action</h3>
+                            <p class="text-gray-600 mb-3">IBM</p>
+                            <p class="text-sm text-gray-500">Dec 2024</p>
                         </div>
                     </div>
 
-                    <!-- Certification Card 5 -->
                     <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" data-aos="fade-up" data-aos-delay="500">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i data-feather="book" class="w-8 h-8 text-orange-600"></i>
+                                <i data-feather="trending-up" class="w-8 h-8 text-orange-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Certification Name</h3>
-                            <p class="text-gray-600 mb-3">Issuing Organization</p>
-                            <p class="text-sm text-gray-500">Date Earned</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Machine Learning Basics</h3>
+                            <p class="text-gray-600 mb-3">VOIS</p>
+                            <p class="text-sm text-gray-500">Jun 2024</p>
                         </div>
                     </div>
 
-                    <!-- Certification Card 6 -->
                     <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow" data-aos="fade-up" data-aos-delay="600">
                         <div class="text-center">
                             <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i data-feather="cpu" class="w-8 h-8 text-indigo-600"></i>
+                                <i data-feather="bar-chart" class="w-8 h-8 text-indigo-600"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-800 mb-2">Certification Name</h3>
-                            <p class="text-gray-600 mb-3">Issuing Organization</p>
-                            <p class="text-sm text-gray-500">Date Earned</p>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Performance Evaluation with ML</h3>
+                            <p class="text-gray-600 mb-3">VOIS</p>
+                            <p class="text-sm text-gray-500">Jun 2024</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Testimonials -->
-        <section id="testimonials" class="py-20">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <h2 class="text-4xl font-serif font-bold text-gray-800">What People Say</h2>
-                    <p class="text-lg text-gray-600 mt-2">Testimonials from colleagues and collaborators.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Testimonial 1 -->
-                    <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all glow-on-hover" data-aos="fade-up" data-aos-delay="100">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                A
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="font-bold text-gray-800">Alex Johnson</h4>
-                                <p class="text-sm text-gray-600">Senior Developer</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 italic">"Shatakshi's AI projects are incredibly innovative. Her attention to detail and problem-solving skills are exceptional."</p>
-                        <div class="flex mt-4">
-                            <span class="text-yellow-400">★★★★★</span>
-                        </div>
-                    </div>
 
-                    <!-- Testimonial 2 -->
-                    <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all glow-on-hover" data-aos="fade-up" data-aos-delay="200">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                S
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="font-bold text-gray-800">Sarah Chen</h4>
-                                <p class="text-sm text-gray-600">Project Manager</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 italic">"Working with Shatakshi was a pleasure. She delivers high-quality code and meets all deadlines consistently."</p>
-                        <div class="flex mt-4">
-                            <span class="text-yellow-400">★★★★★</span>
-                        </div>
-                    </div>
-
-                    <!-- Testimonial 3 -->
-                    <div class="glass-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all glow-on-hover" data-aos="fade-up" data-aos-delay="300">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                R
-                            </div>
-                            <div class="ml-4">
-                                <h4 class="font-bold text-gray-800">Raj Patel</h4>
-                                <p class="text-sm text-gray-600">Tech Lead</p>
-                            </div>
-                        </div>
-                        <p class="text-gray-700 italic">"Shatakshi's machine learning expertise helped our team achieve breakthrough results. Highly recommended!"</p>
-                        <div class="flex mt-4">
-                            <span class="text-yellow-400">★★★★★</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects -->
         <section id="projects" class="py-20 space-y-20">
             <div class="text-center" data-aos="fade-up">
                 <h2 class="text-4xl font-serif font-bold text-gray-800">Featured Projects</h2>
                 <p class="text-lg text-gray-600 mt-2">Creations I'm proud to showcase.</p>
             </div>
 
-            <!-- New Project (Placeholder) -->
             <div class="flex flex-col md:flex-row items-center gap-8" data-aos="fade-left">
                 <div class="md:w-1/2 p-4">
                     <div class="project-card-interactive glass-card rounded-2xl shadow-2xl tilt-card glow-on-hover magnetic">
-                        <img src="https://placehold.co/600x400/10B981/FFFFFF?text=New+Project" alt="New Project" class="rounded-2xl">
+                        <img src="Images/perceptron-logic-gates.png" alt="Perceptron Logic Gates Project" class="rounded-2xl">
                     </div>
                 </div>
                 <div class="md:w-1/2">
-                    <h3 class="text-3xl font-bold text-emerald-600 mb-3">Project Name - Placeholder</h3>
-                    <p class="text-gray-600 mb-4 text-lg">Project description goes here. This is a placeholder for your new project. Replace this with your actual project details, features, and achievements.</p>
+                    <h3 class="text-3xl font-bold text-emerald-600 mb-3">Perceptron Logic Gates</h3>
+                    <p class="text-gray-600 mb-4 text-lg">An interactive Streamlit app built for the DC Hackathon, where we implemented a single neuron (Perceptron) from scratch using only Python and NumPy. The app trains on logic gates (AND, OR, NAND, XOR), visualizes the learning process in real-time with animated decision boundaries, and lets users test predictions live.</p>
                     <div class="flex flex-wrap gap-3 mb-6">
                         <span class="font-semibold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full flex items-center gap-x-2">
-                            <i data-feather="code" class="w-5 h-5"></i> Technology 1
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5" alt="Python"/> Python
                         </span>
                         <span class="font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center gap-x-2">
-                            <i data-feather="database" class="w-5 h-5"></i> Technology 2
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg" class="w-5 h-5" alt="NumPy"/> NumPy
                         </span>
                         <span class="font-semibold bg-purple-100 text-purple-800 px-3 py-1 rounded-full flex items-center gap-x-2">
-                            <i data-feather="zap" class="w-5 h-5"></i> Technology 3
+                            <svg class="w-5 h-5" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0002 4.66663L23.3335 10.5V22.1666L14.0002 28L4.66687 22.1666V10.5L14.0002 4.66663Z" fill="#FF4B4B"></path></svg> Streamlit
                         </span>
                     </div>
                     <div class="flex space-x-4">
-                        <a href="#" target="_blank" class="text-gray-600 hover:text-emerald-500 transition transform hover:scale-110"><i data-feather="github" class="w-7 h-7"></i></a>
-                        <a href="#" target="_blank" class="text-gray-600 hover:text-emerald-500 transition transform hover:scale-110"><i data-feather="external-link" class="w-7 h-7"></i></a>
+                        <a href="https://github.com/Shatakshi0216/Perceptron-Logic-Gates" target="_blank" class="text-gray-600 hover:text-emerald-500 transition transform hover:scale-110"><i data-feather="github" class="w-7 h-7"></i></a>
+                        <a href="https://perceptron-logic-gates.streamlit.app/" target="_blank" class="text-gray-600 hover:text-emerald-500 transition transform hover:scale-110"><i data-feather="external-link" class="w-7 h-7"></i></a>
                     </div>
                 </div>
             </div>
 
-            <!-- Project 1 -->
-            <div class="flex flex-col md:flex-row items-center gap-8" data-aos="fade-left">
+            <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-aos="fade-right">
                 <div class="md:w-1/2 p-4">
                     <div class="project-card-interactive glass-card rounded-2xl shadow-2xl tilt-card glow-on-hover magnetic">
-                        <img src="https://placehold.co/600x400/8B5CF6/FFFFFF?text=KrishiMitra+AI" alt="KrishiMitra Project" class="rounded-2xl">
+                        <img src="Images/krishimitra-ai.png" alt="KrishiMitra AI Assistant Project" class="rounded-2xl">
                     </div>
                 </div>
-                <div class="md:w-1/2">
+                <div class="md:w-1/2 text-right">
                     <h3 class="text-3xl font-bold text-violet-700 mb-3">KrishiMitra - AI Assistant</h3>
                     <p class="text-gray-600 mb-4 text-lg">An AI-powered assistant for small farmers providing bilingual weather reports, crop advice, and pest detection through image analysis.</p>
-                    <div class="flex flex-wrap gap-3 mb-6">
+                    <div class="flex flex-wrap gap-3 mb-6 justify-end">
                         <span class="font-semibold bg-violet-100 text-violet-800 px-3 py-1 rounded-full flex items-center gap-x-2">
                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" class="w-5 h-5" alt="TensorFlow"/> TensorFlow
                         </span>
@@ -712,24 +675,23 @@
                             <svg class="w-5 h-5" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0002 4.66663L23.3335 10.5V22.1666L14.0002 28L4.66687 22.1666V10.5L14.0002 4.66663Z" fill="#FF4B4B"></path></svg> Streamlit
                         </span>
                     </div>
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 justify-end">
                         <a href="https://github.com/Shatakshi0216" target="_blank" class="text-gray-600 hover:text-violet-500 transition transform hover:scale-110"><i data-feather="github" class="w-7 h-7"></i></a>
                         <a href="http://krishimitra-ai.streamlit.app/" target="_blank" class="text-gray-600 hover:text-violet-500 transition transform hover:scale-110"><i data-feather="external-link" class="w-7 h-7"></i></a>
                     </div>
                 </div>
             </div>
 
-            <!-- Project 2 -->
-            <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-aos="fade-right">
+            <div class="flex flex-col md:flex-row items-center gap-8" data-aos="fade-left">
                 <div class="md:w-1/2 p-4">
                     <div class="project-card-interactive glass-card rounded-2xl shadow-2xl tilt-card glow-on-hover magnetic">
-                        <img src="https://placehold.co/600x400/EC4899/FFFFFF?text=Cancer+Detection" alt="Cancer Detection Project" class="rounded-2xl">
+                        <img src="Images/cancer-detection.png" alt="Cancer Detection System Project" class="rounded-2xl">
                     </div>
                 </div>
-                <div class="md:w-1/2 text-right">
+                <div class="md:w-1/2">
                     <h3 class="text-3xl font-bold text-pink-600 mb-3">Cancer Detection System</h3>
                     <p class="text-gray-600 mb-4 text-lg">A high-precision SVM model to classify breast cancer tumors, achieving 98.7% accuracy with an interactive diagnostic dashboard.</p>
-                    <div class="flex flex-wrap gap-3 mb-6 justify-end">
+                    <div class="flex flex-wrap gap-3 mb-6">
                         <span class="font-semibold bg-violet-100 text-violet-800 px-3 py-1 rounded-full flex items-center gap-x-2">
                              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" class="w-5 h-5" alt="Scikit-learn"/> Scikit-learn
                         </span>
@@ -740,45 +702,44 @@
                             <svg class="w-5 h-5" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0002 4.66663L23.3335 10.5V22.1666L14.0002 28L4.66687 22.1666V10.5L14.0002 4.66663Z" fill="#FF4B4B"></path></svg> Streamlit
                         </span>
                     </div>
-                    <div class="flex space-x-4 justify-end">
+                    <div class="flex space-x-4">
                         <a href="https://github.com/Shatakshi0216" target="_blank" class="text-gray-600 hover:text-pink-500 transition transform hover:scale-110"><i data-feather="github" class="w-7 h-7"></i></a>
                         <a href="http://breast-cancer-detectorr.streamlit.app/" target="_blank" class="text-gray-600 hover:text-pink-500 transition transform hover:scale-110"><i data-feather="external-link" class="w-7 h-7"></i></a>
                     </div>
                 </div>
             </div>
             
-            <!-- Project 3 -->
-            <div class="flex flex-col md:flex-row items-center gap-8" data-aos="fade-left">
+            <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-aos="fade-right">
                 <div class="md:w-1/2 p-4">
                     <div class="project-card-interactive glass-card rounded-2xl shadow-2xl tilt-card glow-on-hover magnetic">
-                        <img src="https://placehold.co/600x400/22D3EE/FFFFFF?text=Calories+Prediction" alt="Calories Prediction Project" class="rounded-2xl">
+                        <img src="Images/calories-prediction.png" alt="Calories Burned Prediction Project" class="rounded-2xl">
                     </div>
                 </div>
-                <div class="md:w-1/2">
-                    <h3 class="text-3xl font-bold text-cyan-600 mb-3">Calories Burned Prediction</h3>
-                    <p class="text-gray-600 mb-4 text-lg">An XGBoost regression model that improves prediction accuracy by 20% to enable personalized fitness recommendations.</p>
-                    <div class="flex flex-wrap gap-3 mb-6">
-                        <span class="font-semibold bg-cyan-100 text-cyan-800 px-3 py-1 rounded-full flex items-center gap-x-2">
-                            <svg class="w-5 h-5" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="#0061A8" d="M 20,80 L 50,20 L 80,80 Z" /><path fill="#00A1E0" d="M 20,80 L 50,20 L 35,50 Z" /></svg> XGBoost
+                <div class="md:w-1/2 text-right">
+                    <h3 class="text-3xl font-bold text-amber-600 mb-3">Calories Burned Prediction</h3>
+                    <p class="text-gray-600 mb-4 text-lg">A machine learning model that predicts calories burned during exercise based on user metrics and activity data.</p>
+                    <div class="flex flex-wrap gap-3 mb-6 justify-end">
+                        <span class="font-semibold bg-violet-100 text-violet-800 px-3 py-1 rounded-full flex items-center gap-x-2">
+                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Scikit_learn_logo_small.svg/1200px-Scikit_learn_logo_small.svg.png" class="w-5 h-5" alt="Scikit-learn"/> Scikit-learn
                         </span>
                         <span class="font-semibold bg-pink-100 text-pink-800 px-3 py-1 rounded-full flex items-center gap-x-2">
                             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg" class="w-5 h-5" alt="Pandas"/> Pandas
                         </span>
                         <span class="font-semibold bg-blue-100 text-blue-800 px-3 py-1 rounded-full flex items-center gap-x-2">
-                            <svg class="w-5 h-5" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0002 4.66663L23.3335 10.5V22.1666L14.0002 28L4.66687 22.1666V10.5L14.0002 4.66663Z" fill="#FF4B4B"></path></svg> Streamlit
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5" alt="Python"/> Python
                         </span>
                     </div>
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/Shatakshi0216" target="_blank" class="text-gray-600 hover:text-cyan-500 transition transform hover:scale-110"><i data-feather="github" class="w-7 h-7"></i></a>
-                        <a href="http://calories-burned-prediction.streamlit.app/" target="_blank" class="text-gray-600 hover:text-cyan-500 transition transform hover:scale-110"><i data-feather="external-link" class="w-7 h-7"></i></a>
+                    <div class="flex space-x-4 justify-end">
+                        <a href="https://github.com/Shatakshi0216" target="_blank" class="text-gray-600 hover:text-amber-500 transition transform hover:scale-110"><i data-feather="github" class="w-7 h-7"></i></a>
+                        <a href="#" target="_blank" class="text-gray-600 hover:text-amber-500 transition transform hover:scale-110"><i data-feather="external-link" class="w-7 h-7"></i></a>
                     </div>
                 </div>
             </div>
+            
 
         </section>
 
-        <!-- Journey (Experience & Achievements) -->
-<section id="journey" class="py-20">
+        <section id="journey" class="py-20">
   <div class="text-center mb-20" data-aos="fade-up">
     <h2 class="text-4xl font-serif font-bold text-gray-800">My Journey</h2>
     <p class="text-lg text-gray-600 mt-2">A timeline of my career milestones and achievements.</p>
@@ -786,7 +747,6 @@
   <div class="relative max-w-3xl mx-auto">
     <div class="timeline">
 
-      <!-- Timeline Item 1 (Left) -->
       <div class="timeline-item mb-16 flex" data-aos="fade-left">
         <div class="w-1/2 pr-8 text-right">
           <div class="timeline-content bg-white p-6 rounded-2xl shadow-lg inline-block">
@@ -799,7 +759,6 @@
         <div class="w-1/2"></div>
       </div>
 
-      <!-- Timeline Item 2 (Right) -->
       <div class="timeline-item mb-16 flex" data-aos="fade-right">
         <div class="w-1/2"></div>
         <div class="timeline-item-dot"></div>
@@ -812,7 +771,6 @@
         </div>
       </div>
 
-      <!-- Timeline Item 3 (Left) -->
       <div class="timeline-item mb-16 flex" data-aos="fade-left">
         <div class="w-1/2 pr-8 text-right">
           <div class="timeline-content bg-white p-6 rounded-2xl shadow-lg inline-block">
@@ -825,7 +783,6 @@
         <div class="w-1/2"></div>
       </div>
 
-      <!-- Timeline Item 4 (Right) -->
       <div class="timeline-item flex" data-aos="fade-right">
         <div class="w-1/2"></div>
         <div class="timeline-item-dot"></div>
@@ -842,20 +799,177 @@
   </div>
 </section>
 
-        <!-- Contact -->
-        <section id="contact" class="py-20 text-center" data-aos="zoom-in">
-             <div class="glass-card rounded-2xl p-10 max-w-4xl mx-auto shadow-2xl">
-                <h2 class="text-5xl font-serif font-bold text-gray-800">Let's Create Together</h2>
-                <p class="text-xl text-gray-700 mt-4 mb-8">Have a project in mind or just want to say hi? My inbox is always open.</p>
-                <a href="mailto:shatakshitiwari021@gmail.com" class="bg-gradient-to-r from-violet-600 to-pink-600 text-white px-10 py-4 rounded-full text-lg font-semibold hover:scale-105 transform transition shadow-lg">
-                    Get In Touch 👋
-                </a>
+        <section id="contact" class="py-20 relative overflow-hidden" data-aos="zoom-in">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 opacity-90"></div>
+            <div class="absolute inset-0">
+                <div class="floating-orb orb-1"></div>
+                <div class="floating-orb orb-2"></div>
+                <div class="floating-orb orb-3"></div>
+                <div class="floating-orb orb-4"></div>
+            </div>
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 relative z-10">
+                    <h2 class="text-6xl font-serif font-bold mb-6 text-white drop-shadow-lg">
+                        <span class="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+                            Let's Connect
+                        </span>
+                    </h2>
+                    <p class="text-xl text-gray-200 max-w-2xl mx-auto mb-8">Step into my digital constellation</p>
+                </div>
+                
+                <div class="max-w-6xl mx-auto relative z-10">
+                    <div class="hex-grid">
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-violet-400 to-purple-600 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="mail" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">Email</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="mailto:shatakshitiwari021@gmail.com" class="text-xs text-gray-800 hover:text-purple-600 transition-colors">
+                                    shatakshi@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="linkedin" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">LinkedIn</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://linkedin.com/in/shatakshitiwari017" target="_blank" class="text-xs text-gray-800 hover:text-blue-600 transition-colors">
+                                    Professional
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-gray-600 to-gray-800 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="github" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">GitHub</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://github.com/Shatakshi0216" target="_blank" class="text-xs text-gray-800 hover:text-gray-600 transition-colors">
+                                    Code Repos
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center mb-2">
+                                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0z"/>
+                                    </svg>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">LeetCode</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://leetcode.com/u/stiwari_17/" target="_blank" class="text-xs text-gray-800 hover:text-orange-600 transition-colors">
+                                    DSA Master
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="code" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">HackerRank</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://www.hackerrank.com/profile/shatakshitiwari1" target="_blank" class="text-xs text-gray-800 hover:text-green-600 transition-colors">
+                                    Coding Skills
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="zap" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">CodeChef</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://www.codechef.com/users/shatakshi_17" target="_blank" class="text-xs text-gray-800 hover:text-amber-600 transition-colors">
+                                    Contests
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="code" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">Codolio</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://codolio.com/profile/shatakshi016" target="_blank" class="text-xs text-gray-800 hover:text-blue-500 transition-colors">
+                                    Coding Profile
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="award" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">Credly</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://www.credly.com/users/shatakshi-tiwari.c6bc7dd9" target="_blank" class="text-xs text-gray-800 hover:text-purple-600 transition-colors">
+                                    Certifications
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-700 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="cpu" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">Coding Ninjas</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://www.naukri.com/code360/profile/shatakshitiwari" target="_blank" class="text-xs text-gray-800 hover:text-red-600 transition-colors">
+                                    Practice Hub
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="hex-card">
+                            <div class="hex-front">
+                                <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center mb-2">
+                                    <i data-feather="twitter" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <h3 class="text-sm font-bold text-white">Twitter</h3>
+                            </div>
+                            <div class="hex-back">
+                                <a href="https://x.com/Shatakshi021" target="_blank" class="text-xs text-gray-800 hover:text-blue-500 transition-colors">
+                                    Tech Updates
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
     <footer class="mt-20">
         <div class="container mx-auto px-6 py-8 text-center text-gray-600">
             <div class="flex justify-center space-x-6 mb-4">
@@ -1002,19 +1116,128 @@
             });
         }
         
+        // Dark Mode Toggle Functionality
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            
+            // Set initial theme
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            updateThemeIcon(currentTheme);
+            
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            });
+            
+            function updateThemeIcon(theme) {
+                themeIcon.setAttribute('data-feather', theme === 'dark' ? 'sun' : 'moon');
+                feather.replace();
+            }
+        }
+        
+        // Skills Filter Functionality
+        function initSkillsFilter() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.getAttribute('data-filter');
+                    const skillElements = document.querySelectorAll('.skill-icon');
+                    
+                    skillElements.forEach(skill => {
+                        if (filter === 'all' || skill.classList.contains(filter)) {
+                            skill.style.display = 'flex';
+                            skill.style.opacity = '1';
+                            skill.style.transform = skill.style.transform.replace('scale(0)', 'scale(1)');
+                        } else {
+                            skill.style.opacity = '0.2';
+                            skill.style.transform = skill.style.transform + ' scale(0.8)';
+                        }
+                    });
+                });
+            });
+        }
+        
+        // Contact Form Functionality
+        function initContactForm() {
+            const form = document.getElementById('contact-form');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const data = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message')
+                };
+                
+                // Simulate form submission (replace with actual email service)
+                try {
+                    // You can integrate with EmailJS, Formspree, or Netlify Forms here
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    successMessage.classList.remove('hidden');
+                    errorMessage.classList.add('hidden');
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        successMessage.classList.add('hidden');
+                    }, 5000);
+                } catch (error) {
+                    errorMessage.classList.remove('hidden');
+                    successMessage.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Lazy Loading for Performance
+        function initLazyLoading() {
+            const images = document.querySelectorAll('img[data-src]');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            
+            images.forEach(img => imageObserver.observe(img));
+        }
+        
         // Interactive Skill Sphere with Enhanced Effects
         const skills = [
-            { name: 'Java', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg' },
-            { name: 'Python', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-            { name: 'C++', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
-            { name: 'TensorFlow', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
-            { name: 'HTML5', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-            { name: 'CSS3', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-            { name: 'Git', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
-            { name: 'Streamlit', type: 'svg', content: '<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0002 4.66663L23.3335 10.5V22.1666L14.0002 28L4.66687 22.1666V10.5L14.0002 4.66663Z" fill="#FF4B4B"></path></svg>' },
-            { name: 'Pandas', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
-            { name: 'NumPy', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg' },
-            { name: 'Bootstrap', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg' },
+            // Frontend
+            { name: 'HTML5', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg', category: 'frontend' },
+            { name: 'CSS3', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg', category: 'frontend' },
+            { name: 'Bootstrap', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg', category: 'frontend' },
+            // Backend
+            { name: 'Java', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg', category: 'backend' },
+            { name: 'Python', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg', category: 'backend' },
+            { name: 'C++', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg', category: 'backend' },
+            // AI/ML
+            { name: 'TensorFlow', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg', category: 'ai-ml' },
+            { name: 'Pandas', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg', category: 'ai-ml' },
+            { name: 'Streamlit', type: 'svg', content: '<svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0002 4.66663L23.3335 10.5V22.1666L14.0002 28L4.66687 22.1666V10.5L14.0002 4.66663Z" fill="#FF4B4B"></path></svg>', category: 'ai-ml' },
+            // Tools
+            { name: 'Git', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg', category: 'tools' },
+            { name: 'NPM', type: 'img', content: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg', category: 'tools' },
         ];
 
         const container = document.getElementById('skill-sphere-container');
@@ -1029,7 +1252,7 @@
             const y = radius * Math.sin(currentAngle);
 
             const skillElement = document.createElement('div');
-            skillElement.className = 'skill-icon glow-on-hover magnetic';
+            skillElement.className = `skill-icon glow-on-hover magnetic ${skill.category}`;
             skillElement.style.transform = `translate(${x}px, ${y}px)`;
             skillElement.title = skill.name;
             
@@ -1059,13 +1282,19 @@
             requestAnimationFrame(animateSphere);
         }
         
-        // Initialize all animations
+        // Initialize all animations and functionality
         document.addEventListener('DOMContentLoaded', () => {
             createFloatingShapes();
             initMagneticEffect();
             init3DTilt();
             initParallax();
             animateSphere();
+            // Wait for skills to be created before initializing filter
+            setTimeout(() => {
+                initSkillsFilter();
+            }, 100);
+            initContactForm();
+            initLazyLoading();
         });
         
         // Update progress bar on scroll
